@@ -1,0 +1,72 @@
+import java.util.*;      
+import java.lang.*;      
+public class Main {      
+      
+    public static <E extends Comparable<E>> E min(ArrayList<E> list) {      
+        E element = list.get(0);      
+        for (int j = 1; j < list.size(); j++) {      
+            if (list.get(j).compareTo(element) < 0) {      
+                element = list.get(j);      
+            }      
+        }      
+        return element;      
+    }      
+      
+    public static <E extends Comparable<E>> E max(ArrayList<E> list) {      
+        E element = list.get(0);      
+        for (int j = 1; j < list.size(); j++) {      
+            if (list.get(j).compareTo(element) > 0) {      
+                element = list.get(j);      
+            }      
+        }      
+        return element;      
+    }      
+      
+    public static void main(String[] args) {      
+        Scanner sc = new Scanner(System.in);      
+        String s = sc.next();      
+        ArrayList list;      
+        int isdouble = 0;      
+        switch (s) {      
+            case "Integer":      
+                list = new ArrayList<Integer>();      
+                for (int i = 0; i < 10; i++) {      
+                    int a = sc.nextInt();      
+                    list.add(a);      
+                }      
+                break;      
+            case "Double":      
+                isdouble = 1;      
+                list = new ArrayList<Double>();      
+                for (int i = 0; i < 10; i++) {      
+                    double a = sc.nextDouble();      
+                    list.add(a);      
+                }      
+                break;      
+            case "String":      
+                list = new ArrayList<String>();      
+                for (int i = 0; i < 10; i++) {      
+                    String a = sc.next();      
+                    list.add(a);      
+                }      
+                break;      
+            case "Character":      
+                list = new ArrayList<Character>();      
+                for (int i = 0; i < 10; i++) {      
+                    char a = sc.next().charAt(0);      
+                    list.add(a);      
+                }      
+                break;      
+            default :      
+                list = new ArrayList();      
+        }      
+        if(isdouble == 1) {      
+            System.out.printf("%.3f\n",min(list));        
+            System.out.printf("%.3f\n",max(list));       
+        }      
+        else{      
+            System.out.println(min(list));        
+            System.out.println(max(list));        
+        }      
+    }      
+}  

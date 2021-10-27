@@ -1,0 +1,25 @@
+import java.math.BigInteger;    
+import java.util.*;    
+public class Main{    
+    public static void main(String argc[]) {    
+            Scanner sc = new Scanner(System.in);    
+            while(sc.hasNext()){    
+        String a = sc.next();    
+        String b = sc.next();    
+        BigInteger bigA = new BigInteger(a);    
+        BigInteger bigB = new BigInteger(b);    
+        BigInteger c,d;    
+        c = bigA.gcd(bigB);    
+                d = bigA.multiply(bigB).divide(bigA.gcd(bigB));    
+                BigInteger e;    
+                e = d.nextProbablePrime();    
+        System.out.println( c + " " + d );    
+                System.out.print(e);    
+                for(int i = 4; i > 0; i--){    
+                    e = e.nextProbablePrime();    
+                    System.out.print(" " + e);    
+                }    
+                System.out.println();    
+            }           
+    }    
+}

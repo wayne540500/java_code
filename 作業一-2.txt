@@ -1,0 +1,100 @@
+import java.util.;      
+    import java.lang.;    
+       import java.util.Scanner;      
+    import java.util.Stack;      
+    import java.util.StringTokenizer;      
+    import java.io.;      
+                    
+    public class Main {     
+           public static int getisp(String text) {         
+            int sp = 0;      
+           if(text.equals((()))      
+              {   sp = 0; }      
+             else if(text.equals(())text.equals((%))text.equals(()))      
+            {  sp = 2;  }      
+            else if(text.equals((+))text.equals((-)))      
+            {  sp = 1;  }                 
+            return sp;      
+        }      
+    
+        public static int geticp(String text) {      
+            int cp = 0;      
+            if(text.equals((()))      
+            {  cp = 4; }    
+               else if(text.equals((+))text.equals((-)))      
+            {  cp = 1; }        
+            else if(text.equals(())text.equals(())text.equals((%)))      
+            {  cp = 2; }                          
+            return cp;      
+        }      
+          
+    public static void main(String[] args) {      
+            Scanner scanner = new Scanner(System.in);      
+            String str = scanner.nextLine();      
+            String[] a = new String[1000];      
+            int i , j = 1;              
+            int icp;      
+            int isp;                     
+            StringTokenizer st = new StringTokenizer(str,+-()%, true);      
+            Stack b = new Stack();      
+                  
+            for( i = 0 ; i  j ; i++)      
+            {      
+                if (st.hasMoreTokens())      
+                {      
+                    a[i]=st.nextToken();      
+                    j++;                      
+                }      
+            }      
+            a[j-1]=#;      
+                  
+            for (i = 0; i  j; i++) {      
+                switch (a[i]) {         
+                    case )      
+                        while (!b.peek().equals(()) {       
+                            System.out.print(b.pop()+ );      
+                        }      
+                        b.pop();      
+                        break;      
+                    case #      
+                        for ( i = 0; ij; i++) {       
+                            if (!b.empty()) {      
+                                System.out.print(b.pop()+ );      
+                            }      
+                        }      
+                        break;      
+                    case (      
+                    case       
+                    case       
+                    case +      
+                    case -      
+                    case %               
+                        icp=geticp(a[i]);      
+                        if (b.empty()) {       
+                            b.push(a[i]);      
+                        }       
+                        else {          
+                            isp=getisp((String) b.peek());              
+                        if (icp  isp) {      
+                                b.push(a[i]);      
+                            }     
+                           else {      
+                                while(icp = isp){      
+                                    System.out.print(b.pop()+ );      
+                                    if(b.empty())      
+                                    {      
+                                        isp=0;      
+                                    }      
+                                    else      
+                                        isp=getisp((String) b.peek());      
+                                }      
+                                b.push(a[i]);      
+                            }      
+                        }      
+                        break;      
+                    default      
+                        System.out.print(a[i]+ );      
+                }      
+            }      
+            System.out.println();      
+    }}

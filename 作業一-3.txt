@@ -1,0 +1,175 @@
+import java.util.Scanner;    
+import java.util.StringTokenizer;    
+import java.util.Stack;    
+import java.math.BigDecimal;    
+import java.util.Arrays;    
+    
+    
+public class Main    
+{    
+        public static void main(String[] args)     
+        {    
+            Scanner input = new Scanner(System.in);    
+            String sen=input.nextLine();    
+            operator kkk = new operator();    
+                
+            BigDecimal bb;    
+            bb = kkk.ans(kkk.getPostfix(kkk.token(sen)));    
+            System.out.println(bb);    
+                
+                
+                
+    
+        }    
+            
+    
+    
+    
+public static class operator    
+{    
+    static int count,k=0;    
+    public static String[] token(String sen)    
+    {    
+        String[] strs = new String[1000];    
+        StringTokenizer sent = new StringTokenizer(sen,"+-*/()%",true);    
+        count=sent.countTokens();    
+        for(int i=0;i<count;i++)    
+        {    
+            strs[i] = sent.nextToken();    
+        }    
+                     
+      return strs;    
+    }    
+        
+    public String[] getPostfix(String[] strs)    
+    {    
+                    
+        String[] result = new String[1000];    
+        Stack<String> stack = new Stack<String>();    
+        String temp;    
+            
+        for(int q=0;q<1000;q++)    
+        {    
+            result[q]=new String();    
+        }    
+            
+        for(int j=0;j<count;j++)    
+        {    
+            temp=strs[j];    
+                
+            if(temp.equals("("))    
+            {    
+                stack.push(temp);    
+            }    
+            else if (temp.equals(")"))    
+            {    
+                while(!stack.peek().equals("("))    
+                {    
+                    result[k] = stack.pop();    
+                    k++;    
+                }    
+                stack.pop();    
+            }    
+            else if (temp.equals("+") || temp.equals("-") || temp.equals("*") ||temp.equals("/") || temp.equals("%"))    
+            {    
+                while(true)    
+                {    
+                    if(stack.empty())    
+                    {    
+                        stack.push(temp);    
+                        break;    
+                    }    
+                    else    
+                    {    
+                        if(getPriority(temp) <= getPriority(stack.peek()))    
+                        {    
+                            result[k]=stack.pop();    
+                            k++;    
+                        }    
+                        else    
+                        {    
+                            stack.push(temp);    
+                            break;    
+                        }    
+                    }    
+                }    
+            }    
+            else    
+            {    
+                result[k]=temp;    
+                k++;    
+            }    
+                
+            
+        }    
+        while(!stack.empty())    
+        {    
+            result[k]=stack.pop();    
+            k++;    
+        }    
+        return result;    
+   }    
+        
+    public int getPriority (String str)    
+    {    
+                  
+                  switch(str)    
+                  {    
+                  case "+":    
+                  case "-":    
+                      return 1;    
+                  case "*":    
+                  case "/":    
+                  case "%":    
+                      return 2;    
+                  default:     
+                        return 0;        
+                  }    
+    }    
+        
+    public BigDecimal ans(String[] strss)    
+    {    
+        Stack<String> qq= new Stack();    
+            
+        BigDecimal a,b,d;    
+        qq.push("#");    
+        for(int j=0;j<k;j++)    
+        {    
+                
+            switch(strss[j])    
+            {    
+                case"+":    
+                    a = new BigDecimal(qq.pop());    
+                    b = new BigDecimal(qq.pop());    
+                    qq.push(b.add(a).toString());    
+                    break;    
+                case"-":    
+                    a = new BigDecimal(qq.pop());    
+                    b = new BigDecimal(qq.pop());    
+                    qq.push(b.subtract(a).toString());    
+                    break;      
+                case"*":    
+                    a = new BigDecimal(qq.pop());    
+                    b = new BigDecimal(qq.pop());    
+                    qq.push(b.multiply(a).toString());    
+                    break;    
+                case"/":    
+                    a = new BigDecimal(qq.pop());    
+                    b = new BigDecimal(qq.pop());    
+                    qq.push(b.divide(a).toString());    
+                    break;    
+                case"%":    
+                    a = new BigDecimal(qq.pop());    
+                    b = new BigDecimal(qq.pop());    
+                    qq.push(b.remainder(a).toString());    
+                    break;    
+                default:    
+                        qq.push(strss[j]);    
+                                               
+            }    
+        }    
+        d = new BigDecimal(qq.pop());    
+        return d;    
+    }    
+}    
+}  

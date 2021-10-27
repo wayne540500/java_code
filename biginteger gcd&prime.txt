@@ -1,0 +1,29 @@
+import java.util.Scanner;  
+import java.math.*;  
+        
+public class Main {        
+        
+    public static void main(String args[]) {        
+                
+        Scanner input = new Scanner(System.in);        
+        while(input.hasNext()){  
+            BigInteger m = input.nextBigInteger(), n = input.nextBigInteger();  
+            BigInteger gcd = GCD(m, n);  
+            int i = 0;  
+            System.out.println(gcd);  
+              
+            while(i < 5){  
+                if(i != 0)  
+                        System.out.print(" ");  
+                    System.out.print(gcd.nextProbablePrime());  
+                    gcd = gcd.nextProbablePrime();  
+                    i++;  
+            }  
+            System.out.println();  
+        }  
+    }  
+    public static BigInteger GCD(BigInteger a, BigInteger b){  
+        BigInteger zero = BigInteger.ZERO;  
+        return b != zero ? GCD(b, a.remainder(b)) : a;  
+    }  
+}  

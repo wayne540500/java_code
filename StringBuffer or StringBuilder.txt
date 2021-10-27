@@ -1,0 +1,40 @@
+import java.util.Scanner;  
+import java.math.*;    
+import java.util.*;    
+  
+    
+public class Main{    
+    public static void main(String[] args) {    
+          
+        Scanner S = new Scanner(System.in);    
+        String A1 = S.nextLine();  
+          
+        int A = Integer.valueOf(A1);   
+        int i,w;  
+          
+        String n = new String();    
+        String n1 = new String();  
+        String n2 = new String();  
+          
+         
+          
+        for(i = 0; i < A; i++) {    
+             
+                n = S.nextLine();  
+                n1 = S.nextLine();  
+                n2 = S.nextLine();  
+                
+               StringBuffer sb = new StringBuffer(n);  
+            int index = sb.indexOf(n1);   
+             
+              
+            while(sb.indexOf(n1) >= 0) {                   
+                sb.replace(index,  index + n1.length() , n2);    
+                index = sb.indexOf(n1);   
+            }    
+              
+              
+            System.out.println(sb.reverse());    
+        }             
+    }    
+}  

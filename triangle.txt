@@ -1,0 +1,53 @@
+import java.util.*;      
+import java.awt.geom.Point2D;      
+      
+public class Main      
+{      
+    public static class Triangle{      
+       public void istriangle(Point2D a, Point2D b, Point2D c) {      
+           double line[] = new double[3];      
+           line[0] = a.distance(b);      
+           line[1] = a.distance(c);      
+           line[2] = b.distance(c);      
+           Arrays.sort(line);      
+           if(line[0] + line[1] > line[2] && line[0] + line[2] > line[1] && line[2] + line[1] > line[0]) {      
+               double ar = area(line[0], line[1], line[2]);      
+               System.out.printf("%.3f %.3f %.3f %.3f\n", line[0], line[1], line[2], ar);      
+           }else {      
+               System.out.println("Just Line!");      
+           }      
+       }      
+             
+       public double area(double l1, double l2, double l3) {      
+           double s = (l1 + l2 + l3) / 2;      
+           double total = Math.sqrt(s*(s-l1)*(s-l2)*(s-l3));      
+           return total;      
+       }      
+    }      
+         
+    public static class point{      
+              
+        public void pt(double x1, double y1, double x2, double y2, double x3, double y3) {      
+            Point2D a = new Point2D.Double(x1, y1);      
+            Point2D b = new Point2D.Double(x2, y2);      
+            Point2D c = new Point2D.Double(x3, y3);      
+            Triangle t = new Triangle();      
+            t.istriangle(a, b, c);      
+        }       
+    }      
+          
+    public static void main(String[] args) {      
+        Scanner cin = new Scanner(System.in);      
+        int t = cin.nextInt();      
+        for(int i = 0; i<t; i++){      
+           double xy[][] = new double[3][2];      
+           for(int j = 0; j<3; j++){      
+               for(int k = 0; k<2; k++){      
+                   xy[j][k] = cin.nextDouble();      
+               }      
+           }      
+           point out = new point();      
+           out.pt(xy[0][0], xy[0][1], xy[1][0], xy[1][1], xy[2][0], xy[2][1]);      
+        }      
+    }      
+}  

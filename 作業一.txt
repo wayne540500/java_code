@@ -1,0 +1,131 @@
+ import java.util.Scanner;      
+      
+public class Main {      
+    public static void  main(String args[]){      
+        Scanner input = new Scanner(System.in);      
+        Triangle2D t1 = new Triangle2D(      
+                new MyPoint(input.nextInt(), input.nextInt()),       
+                new MyPoint(input.nextInt(), input.nextInt()),      
+                new MyPoint(input.nextInt(), input.nextInt()) );      
+        Triangle2D t2 = new Triangle2D(      
+                new MyPoint(input.nextInt(), input.nextInt()),       
+                new MyPoint(input.nextInt(), input.nextInt()),      
+                new MyPoint(input.nextInt(), input.nextInt()) );      
+        MyPoint p = new MyPoint(input.nextInt(), input.nextInt());      
+        System.out.println("Triangle1\n" + "Area:" + t1.getArea());      
+        System.out.println("Perimeter:" + t1.getPerimeter());      
+        System.out.println("Triangle2\n" + "Area:" + t2.getArea());      
+        System.out.println("Perimeter:" + t2.getPerimeter());      
+        System.out.printf("Triangle1.contains(%d,%d) = ", p.getX(), p.getY());      
+        System.out.println(t1.contains(p));      
+        System.out.printf("Triangle2.contains(%d,%d) = ", p.getX(), p.getY());      
+        System.out.println(t2.contains(p));      
+        System.out.println("contains(Triangle2D) = " + t1.containsT(t2));      
+        System.out.println("overlaps(Triangle2D) = " + t1.overlaps(t2));      
+              
+        input.close();      
+    }      
+}      
+class Triangle2D{      
+    private static int x1, y1, x2, y2, x3, y3;      
+    private MyPoint p1, p2, p3;      
+    private boolean overlap = true;      
+    public Triangle2D(){      
+        this( new MyPoint(0,0), new MyPoint(1,1), new MyPoint(2,5) );      
+    }      
+    public Triangle2D(MyPoint p1, MyPoint p2, MyPoint p3) {      
+        this.p1 = p1;      
+        this.p2 = p2;      
+        this.p3 = p3;      
+    }      
+    public double getArea(){      
+        double area;      
+        x1 = p1.getX(); y1 = p1.getY();      
+        x2 = p2.getX(); y2 = p2.getY();      
+        x3 = p3.getX(); y3 = p3.getY();      
+        area = (x1*y2 + x2*y3 + x3*y1 - y1*x2 - y2*x3 - y3*x1) / 2;      
+        return Math.abs(area);      
+    }      
+    public double getPerimeter(){      
+        double perimeter;      
+        x1 = p1.getX(); y1 = p1.getY();      
+        x2 = p2.getX(); y2 = p2.getY();      
+        x3 = p3.getX(); y3 = p3.getY();      
+        double r1, r2, r3;      
+        r1 = Math.sqrt( Math.pow(x2-x1,2) + Math.pow(y2-y1,2) );      
+        r2 = Math.sqrt( Math.pow(x1-x3,2) + Math.pow(y1-y3,2) );      
+        r3 = Math.sqrt( Math.pow(x3-x2,2) + Math.pow(y3-y2,2) );      
+        perimeter = r1 + r2 + r3;      
+        return perimeter;      
+    }      
+    public double countArea(MyPoint pp1, MyPoint pp2, MyPoint pp3) {      
+        double a;      
+        int xx1, yy1, xx2, yy2, xx3, yy3;      
+        xx1 = pp1.getX(); yy1 = pp1.getY();      
+        xx2 = pp2.getX(); yy2 = pp2.getY();      
+        xx3 = pp3.getX(); yy3 = pp3.getY();      
+        a = (xx1*yy2 + xx2*yy3 + xx3*yy1 - yy1*xx2 - yy2*xx3 - yy3*xx1) / 2;      
+        return Math.abs(a);      
+    }      
+    public boolean contains(MyPoint p) {      
+        double abc = countArea(p1, p2, p3);      
+        double abp = countArea(p1, p2, p);      
+        double acp = countArea(p1, p3, p);      
+        double bcp = countArea(p2, p3, p);      
+        if(abc == abp + acp + bcp )      
+            return true;      
+        else      
+            return false;      
+    }      
+    public boolean containsT(Triangle2D t) {      
+        boolean check1, check2, check3;      
+        check1 = contains(t.p1);      
+        check2 = contains(t.p2);      
+        check3 = contains(t.p3);      
+        if(check1 == false && check2 == false && check3 == false) {      
+            overlap = false;      
+            return false;      
+        }      
+        else if(check1 == true && check2 == true && check3 == true)      
+            return true;      
+        else      
+            return false;      
+    }      
+    public boolean overlaps(Triangle2D t) {      
+        if(overlap == false) {      
+            if(intersect(t.p1, t.p3, p1, p2).getY() < t.p3.getY() ||       
+                    intersect(t.p2, t.p3, p1, p3).getX() < t.p2.getX() ||      
+                    intersect(t.p1, t.p2, p2, p3).getY() > t.p1.getY()) {      
+                return true;      
+            }      
+            else      
+                return false;      
+        }      
+        return true;      
+    }      
+    public MyPoint intersect(MyPoint p1, MyPoint p2, MyPoint p3, MyPoint p4) {      
+        MyPoint its;      
+        double x, y;      
+        double a = p1.getY() - p2.getY(), b = p1.getX() - p2.getX();      
+        double c = p3.getY() - p4.getY(), d = p3.getX() - p4.getX();      
+        double e = a*p1.getX() - b*p1.getY(), f = c*p3.getX() - d*p3.getY();      
+        double equ = a*d - b*c;      
+        x = (e*d - b*f) / equ;      
+        y = (a*f - e*c) / equ;      
+        its = new MyPoint((int)x, (int)y);      
+        return its;      
+    }      
+}      
+class MyPoint{      
+    private int x, y;      
+    public MyPoint(int a, int b){      
+        x = a;      
+        y = b;      
+    }      
+    public int getX(){      
+        return x;      
+    }      
+    public int getY(){      
+        return y;      
+    }      
+}  

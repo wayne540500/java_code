@@ -1,0 +1,60 @@
+import java.util.Scanner;  
+public class Main {  
+    public static void main(String[] args) {  
+        Scanner input = new Scanner(System.in);  
+        int i,j,k,r;  
+        int a = input.nextInt();  
+          
+        for( r=0; r<a; r++) {  
+              
+            int x = input.nextInt();  
+            int y = input.nextInt();  
+            int apple[][] = new int[x][y];  
+             
+            for(i=0; i<x; i++) {  
+                for(j=0; j<y; j++) {  
+                    apple[i][j] = input.nextInt();  
+                }  
+            }  
+              
+            int w = input.nextInt();  
+            int z = input.nextInt();   
+            int banana[][] = new int[w][z];  
+              
+            for(i=0; i<w; i++) {  
+                for(j=0; j<z; j++) {  
+                    banana[i][j] = input.nextInt();  
+                }  
+            }  
+              
+            int grape[][] = new int[x][z];  
+            for(i=0; i<x; i++) {  
+                for(j=0; j<z; j++) {  
+                    for(k=0; k<y; k++) {  
+                        grape[i][j] += apple[i][k] * banana[k][j];  
+                    }  
+                }  
+            }  
+              
+            if(r!=0) {  
+                System.out.println();  
+            }  
+              
+            for(i=0; i<x; i++) {  
+                for(j=0; j<z; j++) {  
+                    if(j==0)  
+                    System.out.print(grape[i][j]);  
+                    else  
+                        System.out.print(" " + grape[i][j]);  
+                    if(j== z-1) {  
+                    System.out.print("\n");  
+                    }  
+                }  
+            }  
+              
+              
+              
+              
+        }  
+    }  
+}
